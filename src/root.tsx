@@ -36,7 +36,7 @@ export default function Root() {
     };
 
     // Fetch a valid mapid from the remote web service defined in server.js.
-    fetch("/mapid")
+    fetch("/mapid?state=Bihar")
       .then((response) => response.text())
       .then((mapid) => initialize(mapid));
   });

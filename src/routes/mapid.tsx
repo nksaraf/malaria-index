@@ -10,14 +10,15 @@
  *
  */
 
-import { json } from "solid-start";
+import { json, APIEvent } from "solid-start";
 import ee from "@google/earthengine";
-import privateKey from "../../ee-nsaraf-8e47e743c021.json";
+import privateKey from "../../private-key.json";
 import collection from "../module/Landsat_LST";
 import rainfall from "../module/chirps";
 import getNDVI from "../module/NDVI";
 import getPopulation from "../module/population";
 import getWorldCover from "../module/worldCover";
+import { ApiHandler } from "solid-start/api/types";
 
 console.log("Authenticating Earth Engine API using private key...");
 ee.data.authenticateViaPrivateKey(
@@ -74,9 +75,10 @@ function LST(date_start, date_end, geometry) {
   return LandSurfaceTempretureNormazlied;
 }
 
-export async function GET() {
+export async function GET(state:APIEvent) {
   /**** Start of imports. If edited, may not auto-convert in the playground. ****/
   try {
+    var location = new URL(state.request.url) 
     var date_end = ee.Date("2022-08-21");
     var date_start = date_end.advance(-6, "months");
     var populationLayer = ee.ImageCollection(
@@ -91,7 +93,7 @@ export async function GET() {
 
     var admin2 = ee.FeatureCollection("FAO/GAUL_SIMPLIFIED_500m/2015/level2");
 
-    var geometry = admin2.filter(ee.Filter.eq("ADM1_NAME", "Delhi"));
+    var geometry = admin2.filter(ee.Filter.eq("ADM1_NAME", location.searchParams.get('state')));
 
     var { map: chirps } = rainfall(chirps, date_start, date_end, geometry);
 
