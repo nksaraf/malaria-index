@@ -26,6 +26,12 @@ export default function Root() {
         center: { lat: 28.6139, lng: 77.209 },
         zoom: 9,
       });
+      embeddedMap.addListener('click',(e)=>{
+        console.log(e)
+        fetch(`/mapid?state=Bihar&lat=${e.latLng.lat()}&lng=${e.latLng.lng()}`)
+      .then((response) => response.json())
+      .then((mapid) => console.log(mapid));
+      })
 
       // Create a new tile source to fetch visible tiles on demand and displays them on the map.
       const tileSource = new ee.layers.EarthEngineTileSource({
