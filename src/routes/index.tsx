@@ -124,7 +124,7 @@ export default function Report() {
         </div>
         <div>
           <Suspense>
-            <div class="w-full bg-white rounded-md pt-3 text-center flex items-center justify-center bg-opacity-90  rounded-t-none shadow-lg text-slate-500  font-bold text-lg">
+            <div class="w-full bg-white pt-3 text-center flex items-center justify-center bg-opacity-90  rounded-t-none shadow-lg text-slate-500  font-bold text-lg">
               {address()}
             </div>
           </Suspense>
