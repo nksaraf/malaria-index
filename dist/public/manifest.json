@@ -1,0 +1,25 @@
+{
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/virtual/entry-client.tsx": {
+    "file": "assets/entry-client.52738a5b.js",
+    "src": "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/virtual/entry-client.tsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/routes/index.tsx"
+    ],
+    "css": [
+      "assets/entry-client.4c7084c9.css"
+    ]
+  },
+  "src/routes/index.tsx": {
+    "file": "assets/index.204f1e3d.js",
+    "src": "src/routes/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/virtual/entry-client.tsx"
+    ]
+  },
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/virtual/entry-client.css": {
+    "file": "assets/entry-client.4c7084c9.css",
+    "src": "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/virtual/entry-client.css"
+  }
+}

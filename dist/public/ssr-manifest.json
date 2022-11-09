@@ -1,0 +1,34 @@
+{
+  "node_modules/.pnpm/solid-js@1.6.1/node_modules/solid-js/dist/solid.js": [],
+  "node_modules/.pnpm/solid-js@1.6.1/node_modules/solid-js/web/dist/web.js": [],
+  "\u0000vite/preload-helper": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/entry-client/mount.tsx": [],
+  "node_modules/.pnpm/@solidjs+meta@0.28.2_solid-js@1.6.1/node_modules/@solidjs/meta/dist/index.jsx": [],
+  "node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.1/node_modules/@solidjs/router/dist/integration.js": [],
+  "node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.1/node_modules/@solidjs/router/dist/utils.js": [],
+  "node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.1/node_modules/@solidjs/router/dist/routing.js": [],
+  "node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.1/node_modules/@solidjs/router/dist/components.jsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/root/FileRoutes.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/server/ServerContext.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/router.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/server/types.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/error-boundary/ErrorBoundary.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/root/Scripts.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/root/Document.tsx": [],
+  "src/root.css": [],
+  "src/root.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/entry-client/StartClient.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/virtual/entry-client.tsx": [],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/data/FormError.tsx": [
+    "/assets/index.204f1e3d.js"
+  ],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/server/responses.ts": [
+    "/assets/index.204f1e3d.js"
+  ],
+  "node_modules/.pnpm/solid-start@0.2.5_vqtaenuqfpqmxqu2kobz7unc2m/node_modules/solid-start/server/server-functions/browser.ts": [
+    "/assets/index.204f1e3d.js"
+  ],
+  "src/routes/index.tsx": [
+    "/assets/index.204f1e3d.js"
+  ]
+}
