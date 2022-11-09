@@ -243,7 +243,10 @@ export default function Report() {
         <div class="bg-white border-[3px] w-[180px] shadow-lg rounded-md flex flex-row justify-center items-center">
           <select
             class="font-semibold text-lg py-1"
-            onChange={(e) => setStateName(e.currentTarget.value)}
+            onChange={(e) => {
+              setSelectedLocation(null);
+              setStateName(e.currentTarget.value);
+            }}
             value={stateName()}
           >
             <option>Karnataka</option>
