@@ -17,7 +17,7 @@ export default function Report() {
         <div class="w-full mt-4 bg-white py-3 rounded-md text-center flex flex-col space-y-6 bg-opacity-90  shadow-lg  font-bold text-2xl">
           <div class="flex items-center flex-row w-full px-5 space-x-3">
             <img src="/water.png" width={24} height={24} />
-            <div class="flex-1 bg-gradient-to-r from-blue-500 via-green-500 to-red-500 h-3 rounded-md relative">
+            <div class="flex-1 bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-900 h-3 rounded-md relative">
               <div class="absolute left-[70%] bg-white h-6 -top-[35%] w-3 rounded-lg border-[3px] border-black"></div>
             </div>
             <img src="/trees.png" width={24} height={24} />

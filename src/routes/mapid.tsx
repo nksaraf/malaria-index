@@ -10,14 +10,15 @@
  *
  */
 
-import { json } from "solid-start";
+import { json, APIEvent } from "solid-start";
 import ee from "@google/earthengine";
-import privateKey from "../../ee-nsaraf-8e47e743c021.json";
+import privateKey from "../../private-key.json";
 import collection from "../module/Landsat_LST";
 import rainfall from "../module/chirps";
 import getNDVI from "../module/NDVI";
 import getPopulation from "../module/population";
 import getWorldCover from "../module/worldCover";
+
 
 console.log("Authenticating Earth Engine API using private key...");
 ee.data.authenticateViaPrivateKey(
@@ -74,14 +75,15 @@ function LST(date_start, date_end, geometry) {
   return LandSurfaceTempretureNormazlied;
 }
 
-export async function GET() {
+export async function GET(state: APIEvent) {
   /**** Start of imports. If edited, may not auto-convert in the playground. ****/
   try {
+    var location = new URL(state.request.url)
     var date_end = ee.Date("2022-08-21");
     var date_start = date_end.advance(-6, "months");
     var populationLayer = ee.ImageCollection(
-        "CIESIN/GPWv411/GPW_Population_Density"
-      ),
+      "CIESIN/GPWv411/GPW_Population_Density"
+    ),
       worldCover = ee.ImageCollection("ESA/WorldCover/v100"),
       chirps = ee.ImageCollection("UCSB-CHG/CHIRPS/PENTAD");
     var s2 = ee.ImageCollection("COPERNICUS/S2");
@@ -91,7 +93,7 @@ export async function GET() {
 
     var admin2 = ee.FeatureCollection("FAO/GAUL_SIMPLIFIED_500m/2015/level2");
 
-    var geometry = admin2.filter(ee.Filter.eq("ADM1_NAME", "Delhi"));
+    var geometry = admin2.filter(ee.Filter.eq("ADM1_NAME", location.searchParams.get('state')));
 
     var { map: chirps } = rainfall(chirps, date_start, date_end, geometry);
 
@@ -124,7 +126,7 @@ export async function GET() {
     // Display the result.
     //Map.centerObject(image, 9);
 
-    var malaria_index = a.add(coverMap).add(chirps).add(ndvi).add(population);
+    var malaria_index = a.add(coverMap).add(chirps).add(ndvi).add(population).rename('malriaIndex');
     var percetile_index = malaria_index.reduceRegion(
       ee.Reducer.percentile([10, 90]),
       geometry,
@@ -138,14 +140,64 @@ export async function GET() {
     // const {min:v1, max:v2, palette:cmap1}
     var cmap1 = ["blue", "cyan", "green", "yellow", "red"];
     console.log(coverMap);
-    const map = await new Promise((resolve) =>
-      malaria_index.getMap(
-        { min: 1.1, max: 2.2, palette: cmap1 },
-        ({ mapid }) => resolve(mapid)
-      )
-    );
-    console.log(map);
-    return new Response(map);
+    if (
+      location.searchParams.has('lat')
+    ) {
+      var lat = location.searchParams.get('lat')
+      var lng = location.searchParams.get('lng')
+      var point = ee.Geometry.Point([Number(lng), Number(lat)]);
+
+      const LSTValue = await new Promise((resolve) =>
+        a.select("LST").reduceRegion(ee.Reducer.first(), point, 10).get("LST").evaluate(function (v) {
+          resolve(v)
+
+        })
+      );
+      const rainfallValue = await new Promise((resolve) =>
+      chirps.select("precipitation_sum_normazlied").reduceRegion(ee.Reducer.first(), point, 10).get("precipitation_sum_normazlied").evaluate(function (v) {
+          resolve(v)
+
+        })
+      );
+      const ndviValue = await new Promise((resolve) =>
+      ndvi.select("ndvi").reduceRegion(ee.Reducer.first(), point, 10).get("ndvi").evaluate(function (v) {
+          resolve(v)
+
+        })
+      );
+      const populationValue = await new Promise((resolve) =>
+      population.select("population_density_normalized").reduceRegion(ee.Reducer.first(), point, 10).get("population_density_normalized").evaluate(function (v) {
+          resolve(v)
+
+        })
+      );
+      const landCover = await new Promise((resolve) =>
+      coverMap.select("remapped").reduceRegion(ee.Reducer.first(), point, 10).get("remapped").evaluate(function (v) {
+          resolve(v)
+
+        })
+      );
+      const malariaIndexValue = await new Promise((resolve) =>
+      malaria_index.select("malriaIndex").reduceRegion(ee.Reducer.first(), point, 10).get("malriaIndex").evaluate(function (v) {
+          resolve(v)
+
+        })
+      );
+      var data = {
+        populationValue, ndviValue,rainfallValue, LSTValue,landCover,malariaIndexValue
+      }
+      return json (data)
+    }
+    else {
+      const map = await new Promise((resolve) =>
+        malaria_index.getMap(
+          { min: 1.1, max: 2.2, palette: cmap1 },
+          ({ mapid }) => resolve(mapid)
+        )
+      );
+      console.log(map);
+      return new Response(map);
+    }
   } catch (e) {
     console.log(e);
   }
