@@ -8,7 +8,7 @@ import {
   Suspense,
 } from "solid-js";
 import { isServer } from "solid-js/web";
-import server$, { createServerData$ } from "solid-start/server";
+import server$ from "solid-start/server";
 
 declare global {
   var google;
@@ -17,7 +17,7 @@ declare global {
 
 export default function Report() {
   // const data = createServerData$(
-  const [stateName, setStateName] = createSignal("Bihar");
+  const [stateName, setStateName] = createSignal("Delhi");
   const [center] = createResource(stateName, async (stateName) => {
     let response = await server$.fetch(`/api/center?state=${stateName}`);
     let json = await response.json();
