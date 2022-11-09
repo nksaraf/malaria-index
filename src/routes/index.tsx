@@ -16,7 +16,6 @@ declare global {
 }
 
 export default function Report() {
-  // const data = createServerData$(
   const [stateName, setStateName] = createSignal("Delhi");
   const [center] = createResource(stateName, async (stateName) => {
     let response = await server$.fetch(`/api/center?state=${stateName}`);
@@ -39,12 +38,10 @@ export default function Report() {
   });
 
   const embeddedMap = createMemo(() => {
-    console.log("heree", center(), isServer);
     if (!center() || isServer) {
       return;
     }
 
-    console.log("heree");
     // Get a reference to the placeholder DOM element to contain the map.
     const mapContainerEl = document.getElementById("map-container");
 
