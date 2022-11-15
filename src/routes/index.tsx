@@ -24,19 +24,6 @@ export default function Report() {
   });
   const [selectedLocation, setSelectedLocation] = createSignal(null);
 
-  createEffect(() => {
-    if (selectedLocation()) {
-      const marker = new google.maps.Marker({
-        position: selectedLocation(),
-        map: embeddedMap(),
-      });
-
-      onCleanup(() => {
-        marker.setMap(null);
-      });
-    }
-  });
-
   const embeddedMap = createMemo(() => {
     if (!center() || isServer) {
       return;
@@ -64,13 +51,47 @@ export default function Report() {
 
   const [selectedData] = createResource(selectedLocation, async (location) => {
     if (!location) {
-      return;
+      return null;
     }
     let response = await server$.fetch(
       `/api/mapid?state=${stateName()}&lat=${location.lat()}&lng=${location.lng()}`
     );
     let json = await response.json();
     return json;
+  });
+
+  const [address] = createResource(selectedLocation, async (location) => {
+    if (!location) {
+      return null;
+    }
+    let response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat()},${location.lng()}&key=AIzaSyBbM5TgyoeWwvUG5F0PGJXLR37qOzSCf7s`
+    );
+
+    let json = await response.json();
+    let components = json.results[0].address_components.filter((component) => {
+      return component.types.includes("political");
+    });
+
+    return components
+      .reverse()
+      .slice(0, 3)
+      .reverse()
+      .map((i) => i.short_name)
+      .join(", ");
+  });
+
+  createEffect(() => {
+    if (selectedLocation()) {
+      const marker = new google.maps.Marker({
+        position: selectedLocation(),
+        map: embeddedMap(),
+      });
+
+      onCleanup(() => {
+        marker.setMap(null);
+      });
+    }
   });
 
   createEffect(() => {
@@ -93,26 +114,6 @@ export default function Report() {
       .then((mapid) => initialize(mapid));
   });
 
-  const [address] = createResource(selectedLocation, async (location) => {
-    if (!location) {
-      return;
-    }
-    let s = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat()},${location.lng()}&key=AIzaSyBbM5TgyoeWwvUG5F0PGJXLR37qOzSCf7s`
-    );
-
-    let json = await s.json();
-    let components = json.results[0].address_components.filter((component) => {
-      return component.types.includes("political");
-    });
-
-    return components
-      .reverse()
-      .slice(0, 3)
-      .reverse()
-      .map((i) => i.short_name)
-      .join(", ");
-  });
   return (
     <>
       <div class="fixed top-24 left-4 w-[320px]">
